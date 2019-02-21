@@ -30,5 +30,14 @@ describe 'Artist Integration Tests' do
 
       expect(page.body).to include('Information about Artist1')
     end
+
+    it 'renders the form again if a valid name is not provided' do
+      visit '/artists/new'
+
+      fill_in(:town, :with => 'Town1')
+      click_button "Submit"
+
+      expect(page).to have_selector("form")
+    end
   end
 end
