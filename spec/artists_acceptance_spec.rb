@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'Artist Integration Tests' do
+  let(:artist) { create(:artist, name: "Jon", town: 'Town1') }
+  let(:artist2) { create(:artist) }
+
   describe "GET '/artists/new' - New Artist Form" do
     it "Shows the heading" do
       visit '/artists/new'
@@ -38,6 +41,12 @@ describe 'Artist Integration Tests' do
       click_button "Submit"
 
       expect(page).to have_selector("form")
+    end
+
+    it 'renders the form again if a valid name is not provided' do
+      visit "/artists/#{artist2.id}"
+
+      expect(page.body).to include("Information about John")
     end
   end
 end
